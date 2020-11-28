@@ -57,8 +57,7 @@ async def h(ctx):
 @bot.command(name="🧂")
 async def salt(ctx, members: commands.Greedy[discord.Member]):
     if can_summon(ctx.author):
-        member_ids = list(map(lambda member: member.id, members))
-        add_members(member_ids)
+        add_members(members)
     else: 
         ctx.send(f'You need the role of {SUMMON_ROLE} to do that, dummy')
         await react(ctx.message)
@@ -66,8 +65,7 @@ async def salt(ctx, members: commands.Greedy[discord.Member]):
 @bot.command()  
 async def unsalt(ctx, members: commands.Greedy[discord.Member]):
     if can_summon(ctx.author):
-        member_ids = list(map(lambda member: member.id, members))
-        remove_members(member_ids)
+        remove_members(members)
         
     else:
         ctx.send(f'You need the role of {SUMMON_ROLE} to do that, dummy')
@@ -76,23 +74,33 @@ async def unsalt(ctx, members: commands.Greedy[discord.Member]):
 def can_summon(author):
     return (not SUMMON_ROLE) or SUMMON_ROLE in filter(lambda role: role.name, author.roles)
 
-def add_members(member_ids):
+def add_members(members):
+    member_ids = get_member_ids(members)
     for id in member_ids:
         if id not in member_store:
             member_store.append(id)
         else:
             print(f'{id} is i n member store {member_store}')
     update_member_file()
+    print(f'Added {", ".join(get_member_names(members))}')
+
+def remove_members(members):
+    member_ids = get_member_ids(members)
+    for id in member_ids:
+        if id in member_store:
+            member_store.remove(id)
+    update_member_file()
+    print(f'Removed {", ".join(get_member_names(members))}')
 
 def update_member_file():
     with open('members.json', 'w') as f:
         dump(member_store, f)
 
-def remove_members(member_ids):
-    for id in member_ids:
-        if id in member_store:
-            member_store.remove(id)
-    update_member_file()
+def get_member_ids(members):
+    return list(map(lambda member: member.id, members))
+
+def get_member_names(members):
+    return list(map(lambda member: member.name, members))
 
 bot.run(API_KEY)
 
