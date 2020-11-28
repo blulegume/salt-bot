@@ -13,11 +13,11 @@ COMMANDS = f'''
 :salt: :salt: :salt:
 ```
 Commands:
-    🧂 <user...>            Add user(s) to the list of saltees
-    unsalt <user...>        Remove user(s) from the list of saltees
-    h                       Get help with commands
+    🧂🧂 <user...>          Add user(s) to the list of saltees
+    🧂unsalt <user...>      Remove user(s) from the list of saltees
+    🧂h                     Get help with commands
 
-    You must have the role of {SUMMON_ROLE} to do this
+Role required to do this: {SUMMON_ROLE}
 ```
 '''
 
