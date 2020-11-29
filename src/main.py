@@ -15,6 +15,7 @@ COMMANDS = f'''
 Commands:
     🧂🧂 <user...>          Add user(s) to the list of saltees
     🧂unsalt <user...>      Remove user(s) from the list of saltees
+    🧂clear                 Clear the list of saltees
     🧂h                     Get help with commands
 
 Role required to do this: {SUMMON_ROLE}
@@ -54,6 +55,11 @@ def should_salt(message):
 async def h(ctx):
     await ctx.send(COMMANDS)
 
+@bot.command()
+async def clear(ctx):
+    clear_members()
+    await ctx.send('ugh, fine')
+
 @bot.command(name="🧂")
 async def salt(ctx, members: commands.Greedy[discord.Member]):
     if can_summon(ctx.author):
@@ -91,6 +97,11 @@ def remove_members(members):
             member_store.remove(id)
     update_member_file()
     print(f'Removed {", ".join(get_member_names(members))}')
+
+def clear_members():
+    member_store.clear()
+    update_member_file()
+    print('Cleared member store')
 
 def update_member_file():
     with open('members.json', 'w') as f:
