@@ -65,6 +65,10 @@ Role required to do this: {self.summon_role}
     async def unsalt(self, ctx, members: commands.Greedy[discord.Member]):
         await self._salt(ctx, members, self.remove_members)
 
+    @commands.command(name="list")  
+    async def ls(self, ctx):
+        await ctx.send(f'Currently salty: {self.get_member_names()}')
+
     async def _salt(self, ctx, members: commands.Greedy[discord.Member], fn):
         if self.can_summon(ctx.author):
             fn(ctx.guild.id, members)
