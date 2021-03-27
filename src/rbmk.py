@@ -129,4 +129,4 @@ Role required to do this: {self.summon_role}
         return list(map(lambda member: member.name, members))
 
     def get_saltees(self, guild_id):
-        return guild_id in self.member_store ? self.member_store[guild_id] : 'nobody!'
+        return self.member_store[guild_id] if guild_id in self.member_store else 'nobody!'
