@@ -68,7 +68,8 @@ Role required to do this: {self.summon_role}
 
     @commands.command(name="list")  
     async def ls(self, ctx):
-        await ctx.send(f'Currently salty: {self.get_saltees(ctx.guild.id)}')
+        # await ctx.send(f'Currently salty: {','.join(self.get_saltees(ctx.guild.id))}')
+        await ctx.send("that's private.")
 
     async def _salt(self, ctx, members: commands.Greedy[discord.Member], fn):
         if self.can_summon(ctx.author):
