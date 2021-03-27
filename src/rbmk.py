@@ -19,6 +19,7 @@ Commands:
     🧂🧂 <user...>          Add user(s) to the list of saltees
     🧂unsalt <user...>      Remove user(s) from the list of saltees
     🧂clear                 Clear the list of saltees
+    🧂list                  List the current saltees
     🧂h                     Print this message
 
 Role required to do this: {self.summon_role}
@@ -67,7 +68,7 @@ Role required to do this: {self.summon_role}
 
     @commands.command(name="list")  
     async def ls(self, ctx):
-        await ctx.send(f'Currently salty: {self.get_member_names()}')
+        await ctx.send(f'Currently salty: {self.get_saltees(ctx.guild.id)}')
 
     async def _salt(self, ctx, members: commands.Greedy[discord.Member], fn):
         if self.can_summon(ctx.author):
@@ -126,3 +127,6 @@ Role required to do this: {self.summon_role}
 
     def get_member_names(self, members):
         return list(map(lambda member: member.name, members))
+
+    def get_saltees(self, guild_id):
+        return guild_id in self.member_store ? self.member_store[guild_id] : 'nobody!'
