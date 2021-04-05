@@ -45,7 +45,6 @@ class MemberManager():
 
     @classmethod
     def list_members(cls, guild_id):
-        print(guild_id, cls._store[guild_id])
         if (not guild_id in cls._store) or (len(cls._store[guild_id]) == 0):
             return 'nobody!'
         return ', '.join(cls._get_member_nicks(cls._store[guild_id]))
