@@ -55,7 +55,7 @@ Role required to do this: {self.summon_role}
         await self._salt(ctx, members, Mgr.add_members)
 
     @commands.command(name=":salt:")
-    async def salt2(self, ctx, members: commands.Greedy[discord.Member]):
+    async def mobile_salt(self, ctx, members: commands.Greedy[discord.Member]):
         await self.salt(ctx, members)
 
     @commands.command()  
